@@ -1,27 +1,24 @@
 fetch('http://localhost:3000/api/products')
     .then(res => {return res.json()})
-    //.then(data => {console.log(data)})
-    .then(data => 
-        {data.forEach(item => {
-            const heading = '<h3>${item.name}</h3>';
-
-            document.querySelector('h3').insertAdjacentHTML('beforeend', heading);
+    .then(data => {console.log(data)
+        
+        //Specify the container in which the content is to be inserted:
+        let container = document.getElementById('items');
+        
+        //Request data to be inserted from the API:
+        data.forEach(item => {
+            const itemHTML = 
+            `<a href="./product.html?id=${item._id}">
+            <article>
+              <img src="${item.imageUrl}" alt="${item.altTxt}">
+              <h3 class="productName">${item.name}</h3>
+              <p class="productDescription">${item.description}</p>
+            </article>
+            </a>`;
+        
+        //Populate the defined container with the API data:    
+        container.innerHTML += itemHTML;
         })})
-    .catch(error => console.log(error))
-
-//Create new elements
-let articleElement = document.createElement('article');
-//let imageElement = document.createElement('image');
-let headingElement = document.createElement('h3');
-//let paraElement = document.createElement('p');
-
-//Add content to the new elements
-
-
-
-//Add the elements to the web page
-let container = document.getElementById('items');
-
-container.appendChild(articleElement);
-articleElement.appendChild(headingElement);
-//articleElement.appendChild(paraElement);
+        
+        //Error log:
+        .catch(error => console.log(error));
