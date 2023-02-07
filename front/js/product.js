@@ -46,9 +46,11 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
   //Adding 'Add to Cart' button functionality:
   const cartButton = document.getElementById('addToCart');
   
-
   cartButton.addEventListener('click', function() {
-    console.log(name, price,)
+    const {value:selectedColor} = colorContainer;
+    const array = [name, price, selectedColor];
+    const stringArray = JSON.stringify(array);
+    console.log(stringArray);
     })
 
 
@@ -58,6 +60,11 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
 
 /*
 local storage - stringify before sending to storage, parse when retrieving from storage.
+
+array of objects rather than array
+business logic for updating cart, etc
+get/set functions for local storage
+dozen or so lines for logic
 
 
 */
