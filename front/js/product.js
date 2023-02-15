@@ -45,12 +45,16 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
  
   //Adding 'Add to Cart' button functionality:
   const cartButton = document.getElementById('addToCart');
+  const quantity = document.getElementById('quantity').value;
   
   cartButton.addEventListener('click', function() {
     const {value:selectedColor} = colorContainer;
-    const array = [name, price, selectedColor];
-    const stringArray = JSON.stringify(array);
-    console.log(stringArray);
+    const item = {ID, name, price, selectedColor, quantity};
+    const itemString = JSON.stringify(item);
+    console.log(item);
+    
+    //Store item in local storage:
+    localStorage.setItem('item', itemString)
     })
 
 
