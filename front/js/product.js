@@ -7,7 +7,7 @@ console.log(ID);
 //Find product data based on ID number
 const product = fetch('http://localhost:3000/api/products/' + ID)
   .then(res => {return res.json()})
-  .then(data => {console.log(data)
+  .then(data => {//console.log(data)
 
   //Specify the container in which the content is to be inserted:
   const imageContainer = document.getElementsByClassName('item__img')[0];
@@ -45,17 +45,32 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
  
   //Adding 'Add to Cart' button functionality:
   const cartButton = document.getElementById('addToCart');
-  const quantity = document.getElementById('quantity').value;
+  const quantity = document.getElementById('quantity');
   
   cartButton.addEventListener('click', function() {
     const {value:selectedColor} = colorContainer;
-    const item = {ID, name, price, selectedColor, quantity};
+    const {value:selectedQuantity} = quantity;
+
+    const item = {ID, name, price, selectedColor, selectedQuantity};
     const itemString = JSON.stringify(item);
-    console.log(item);
+    
+    //Input verification:
+    if (selectedColor == '') {
+      console.log('Please select a color.')
+      return
+    }
+
+    if (selectedQuantity < 1) {
+      console.log('Quantity must be at least 1.')
+      return
+    }
     
     //Store item in local storage:
+    else {
+    console.log(item);
     localStorage.setItem('item', itemString)
-    })
+    }
+  })
 
 
 })
