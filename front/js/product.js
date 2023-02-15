@@ -56,19 +56,20 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
     
     //Input verification:
     if (selectedColor == '') {
-      console.log('Please select a color.')
-      return
+      window.alert('Please select a color.');
+      return;
     }
 
     if (selectedQuantity < 1) {
-      console.log('Quantity must be at least 1.')
-      return
+      window.alert('Quantity must be at least 1.');
+      return;
     }
     
     //Store item in local storage:
     else {
     console.log(item);
-    localStorage.setItem('item', itemString)
+    localStorage.setItem('item', itemString);
+    window.location = "http://127.0.0.1:5500/front/html/cart.html";
     }
   })
 
