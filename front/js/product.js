@@ -51,7 +51,7 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
     const {value:selectedColor} = colorContainer;
     const {value:selectedQuantity} = quantity;
 
-    const item = {ID, name, price, selectedColor, selectedQuantity};
+    const item = {ID, selectedColor, selectedQuantity};
     const itemString = JSON.stringify(item);
     
     //Input verification:
