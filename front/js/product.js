@@ -51,10 +51,10 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
     const {value:selectedColor} = colorContainer;
     const {value:selectedQuantity} = quantity;
 
-    const item = {ID, selectedColor, selectedQuantity};
+    const item = {ID, selectedColor, imageUrl, altTxt, name, price, selectedQuantity};
     const itemString = JSON.stringify(item);
     
-    //Input verification:
+    //Input validation:
     if (selectedColor == '') {
       window.alert('Please select a color.');
       return;
@@ -65,11 +65,13 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
       return;
     }
     
+    //Prevent decimal input required too
+
     //Store item in local storage:
     else {
     console.log(item);
     localStorage.setItem('item', itemString);
-    window.location = "http://127.0.0.1:5500/front/html/cart.html";
+    //window.location = "http://127.0.0.1:5500/front/html/cart.html";
     }
   })
 
