@@ -65,15 +65,18 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
       return;
     }
     
+    //TO DO:
+    //Prevent decimal input
+    //Prevent duplicate items / quantity update
+
     //Store item in local storage:
     else {
     console.log(item);
     localStorage.setItem('item', itemString);
     window.location = "http://127.0.0.1:5500/front/html/cart.html";
     }
+    
   })
-
-
 })
   
 
