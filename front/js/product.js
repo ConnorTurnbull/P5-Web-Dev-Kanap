@@ -5,7 +5,7 @@ const ID = urlParams.get('id');
 console.log(ID);
 
 //Find product data based on ID number
-const product = fetch('http://localhost:3000/api/products/' + ID)
+fetch('http://localhost:3000/api/products/' + ID)
   .then(res => {return res.json()})
   .then(data => {//console.log(data)
 
@@ -17,17 +17,12 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
   const colorContainer = document.getElementById('colors');
 
   //Request data to be inserted from the API:
-  const imageUrl = data.imageUrl;
-  const altTxt = data.altTxt;
-  const name = data.name;
-  const price = data.price;
-  const desc = data.description;
-  const colors = data.colors;
+  const {imageUrl, altTxt, name, price, description:desc, colors} = data
   
   const imageSRC = `<div class="item__img"><img src="${imageUrl}" alt="${altTxt}"></div>`;
   const nameHTML = `<h1 id="title">${name}</h1>`;
-  const priceHTML = `<p>Prix : <span id="price">${price}</span>€</p>`;
-  const descHTML = `<p id="description">${description}</p>`;
+  const priceHTML = `<span id="price">${price}</span>`;
+  const descHTML = `<p id="description">${desc}</p>`;
   
   //For loop for color select dropdown:
   colors.forEach(function(color) {
@@ -39,9 +34,9 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
 
   //Populate the defined container with the API data:
   imageContainer.innerHTML = imageSRC;
-  nameContainer.innerHTML = data.name;
-  priceContainer.innerHTML = data.price;
-  descContainer.innerHTML = data.description;
+  nameContainer.innerHTML = nameHTML;
+  priceContainer.innerHTML = priceHTML;
+  descContainer.innerHTML = descHTML;
  
   //Adding 'Add to Cart' button functionality:
   const cartButton = document.getElementById('addToCart');
@@ -73,7 +68,7 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
     else {
     console.log(item);
     localStorage.setItem('item', itemString);
-    window.location = "http://127.0.0.1:5500/front/html/cart.html";
+    window.alert('Item added to cart!')
     }
     
   })
