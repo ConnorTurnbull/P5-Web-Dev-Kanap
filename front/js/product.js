@@ -51,7 +51,7 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
     const {value:selectedColor} = colorContainer;
     const {value:selectedQuantity} = quantity;
 
-    const item = {ID, selectedColor, selectedQuantity};
+    const item = {ID, selectedColor, imageUrl, altTxt, name, price, selectedQuantity};
     const itemString = JSON.stringify(item);
     
     //Input verification:
@@ -82,12 +82,9 @@ const product = fetch('http://localhost:3000/api/products/' + ID)
 
 
 /*
-local storage - stringify before sending to storage, parse when retrieving from storage.
 
 array of objects rather than array
 business logic for updating cart, etc
-get/set functions for local storage
 dozen or so lines for logic
-
 
 */
