@@ -83,12 +83,12 @@ fetch('http://localhost:3000/api/products/' + ID)
 
 /*
 - fixed unused values & removed / consolidated unused code.
-
+- cart page render finished
+- total quantity and price done - auto update needed from cart page?
 
 TO DO:
 Prevent decimal input
 Prevent duplicate items / quantity update
-array of objects rather than array
 business logic for updating cart, etc - dozen or so lines
 
 

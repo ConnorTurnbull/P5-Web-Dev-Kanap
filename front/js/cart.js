@@ -8,8 +8,6 @@ console.log(cartParse);
 const itemContainer = document.getElementById('cart__items');
 
 //Insert Data:
-//const {ID:itemID, selectedColor:itemColor, imageUrl, altTxt:imageAlt, name:itemName, price:itemPrice, selectedQuantity:quantity} = cartParse;
-
 cartParse.forEach(cartParse => {
 
 const itemHTML =
@@ -40,6 +38,23 @@ itemContainer.innerHTML += itemHTML;
 
 });
 
+//Total quantity & price:
+const quantContainer = document.getElementById('totalQuantity');
+const priceContainer = document.getElementById('totalPrice');
+
+const quantHTML = `<span id="totalQuantity"><!-- 2 --></span>`;
+const priceHTML = `<span id="totalPrice"><!-- 84.00 --></span>`;
+
+let quantTotal = 0;
+let priceTotal = 0;
+
+cartParse.forEach(cartParse => {
+  quantTotal = quantTotal + parseInt(cartParse.selectedQuantity);
+  priceTotal = priceTotal + cartParse.price;
+});
+
+quantContainer.innerHTML = quantTotal;
+priceContainer.innerHTML = priceTotal;
 
 
 
