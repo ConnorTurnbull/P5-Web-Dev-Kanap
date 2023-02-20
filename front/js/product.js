@@ -2,12 +2,11 @@
 const search = window.location.search;
 const urlParams = new URLSearchParams(search);
 const ID = urlParams.get('id');
-console.log(ID);
 
 //Find product data based on ID number
 fetch('http://localhost:3000/api/products/' + ID)
   .then(res => {return res.json()})
-  .then(data => {//console.log(data)
+  .then(data => {console.log(data)
 
   //Specify the container in which the content is to be inserted:
   const imageContainer = document.getElementsByClassName('item__img')[0];
@@ -45,11 +44,9 @@ fetch('http://localhost:3000/api/products/' + ID)
   cartButton.addEventListener('click', function() {
     const {value:selectedColor} = colorContainer;
     const {value:selectedQuantity} = quantity;
-
     const item = {ID, selectedColor, imageUrl, altTxt, name, price, selectedQuantity};
-    const itemString = JSON.stringify(item);
     
-    //Input verification:
+    //Input validation:
     if (selectedColor == '') {
       window.alert('Please select a color.');
       return;
@@ -60,26 +57,39 @@ fetch('http://localhost:3000/api/products/' + ID)
       return;
     }
     
-    //TO DO:
-    //Prevent decimal input
-    //Prevent duplicate items / quantity update
+    //Store item in cart / local storage:
+    const localStorageContents = localStorage.getItem('cart');
 
-    //Store item in local storage:
-    else {
-    console.log(item);
-    localStorage.setItem('item', itemString);
-    window.alert('Item added to cart!')
+    let cart;
+    if (localStorageContents === null) {
+      cart = [];
+
     }
-    
+
+    else {
+      cart = JSON.parse(localStorageContents);
+
+    }
+
+    cart.push(item);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    console.log(localStorage);
+    console.log(cart);
+    window.alert('Item added to cart!');
   })
 })
   
 
 
 /*
+- fixed unused values & removed / consolidated unused code.
 
+
+TO DO:
+Prevent decimal input
+Prevent duplicate items / quantity update
 array of objects rather than array
-business logic for updating cart, etc
-dozen or so lines for logic
+business logic for updating cart, etc - dozen or so lines
+
 
 */
