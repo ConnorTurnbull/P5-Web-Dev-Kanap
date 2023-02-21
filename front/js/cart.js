@@ -49,8 +49,9 @@ let quantTotal = 0;
 let priceTotal = 0;
 
 cartParse.forEach(cartParse => {
-  quantTotal = quantTotal + parseInt(cartParse.selectedQuantity);
-  priceTotal = priceTotal + cartParse.price;
+  quantTotal = quantTotal + cartParse.selectedQuantity;
+  itemTotal = cartParse.price * cartParse.selectedQuantity;
+  priceTotal = priceTotal + itemTotal;
 });
 
 quantContainer.innerHTML = quantTotal;
