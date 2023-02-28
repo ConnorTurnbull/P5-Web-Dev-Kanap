@@ -85,7 +85,6 @@ fetch('http://localhost:3000/api/products/' + ID)
 /*
 
 TO DO:
-Prevent decimal input
-
-look at maps/filters for arrays
+- Prevent decimal input
+- look at maps/filters for arrays
 */

@@ -1,6 +1,5 @@
 //Retrieve item from local storage:
 const cart = localStorage.getItem('cart');
-
 const cartParse = JSON.parse(cart);
 console.log(cartParse);
 
@@ -38,6 +37,18 @@ itemContainer.innerHTML += itemHTML;
 
 });
 
+//Modify quantity:
+const quantInput = document.getElementsByClassName('itemQuantity');
+
+quantInput.itemQuantity.addEventListener('change', () => {
+  const newQuant = quantInput.itemQuantity.value
+  console.log(newQuant);
+});
+
+//Delete Item:
+const deleteButton = document.getElementsByClassName('deleteItem');
+//not sure how this can work as it's not a button in the html?
+
 //Total quantity & price:
 const quantContainer = document.getElementById('totalQuantity');
 const priceContainer = document.getElementById('totalPrice');
@@ -57,6 +68,16 @@ cartParse.forEach(cartParse => {
 quantContainer.innerHTML = quantTotal;
 priceContainer.innerHTML = priceTotal;
 
+
+
+
+
+
+/* TO DO:
+- event listeners for delete + quant update
+- form
+
+*/
 
 
 
