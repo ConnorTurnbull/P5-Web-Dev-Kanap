@@ -40,13 +40,21 @@ itemContainer.innerHTML += itemHTML;
 //Modify quantity:
 const quantInput = document.getElementsByClassName('itemQuantity');
 
-quantInput.itemQuantity.addEventListener('change', () => {
+quantInput.itemQuantity.addEventListener('change', function () {
   const newQuant = quantInput.itemQuantity.value
   console.log(newQuant);
-});
+  console.log(cartParse[0].selectedQuantity);
+})
+
+
+
 
 //Delete Item:
-const deleteButton = document.getElementsByClassName('deleteItem');
+//const deleteButton = document.getElementsByClassName('deleteItem');
+//deleteButton.addEventListener('click', () => {
+
+
+//})
 //not sure how this can work as it's not a button in the html?
 
 //Total quantity & price:
