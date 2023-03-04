@@ -10,7 +10,7 @@ const itemContainer = document.getElementById('cart__items');
 cartParse.forEach(cartParse => {
 
 const itemHTML =
-`<article class="cart__item" data-id="${cartParse.ID}" data-color="${cartParse.Color}">
+`<article class="cart__item" data-id="${cartParse.ID}" data-color="${cartParse.selectedColor}">
 <div class="cart__item__img">
 <img src="${cartParse.imageUrl}" alt="${cartParse.altTxt}">
 </div>
@@ -26,7 +26,7 @@ const itemHTML =
     <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${cartParse.selectedQuantity}">
   </div>
   <div class="cart__item__content__settings__delete">
-    <p class="deleteItem">Delete</p>
+    <p class="deleteItem ${cartParse.selectedColor}-${cartParse.ID}">Delete</p>
   </div>
 </div>
 </div>
@@ -35,27 +35,34 @@ const itemHTML =
 //Populate container with data:
 itemContainer.innerHTML += itemHTML;
 
+
 });
 
 //Modify quantity:
 const quantInput = document.getElementsByClassName('itemQuantity');
 
-quantInput.itemQuantity.addEventListener('change', function () {
-  const newQuant = quantInput.itemQuantity.value
-  console.log(newQuant);
-  console.log(cartParse[0].selectedQuantity);
-})
-
-
-
+// quantInput.itemQuantity.addEventListener('change', function () {
+//   const newQuant = quantInput.itemQuantity.value
+//   console.log(newQuant);
+//   console.log(cartParse[0].selectedQuantity);
+// })
 
 //Delete Item:
-//const deleteButton = document.getElementsByClassName('deleteItem');
-//deleteButton.addEventListener('click', () => {
+
+const deleteButtons = Array.from(document.getElementsByClassName('deleteItem'));
+deleteButtons.forEach(deleteButton => {
+  console.log(deleteButton);
+  deleteButton.addEventListener('click', (e) => {
+  const target = e.target.closest('.cart__item');
+  const {id, color} = target.dataset;
+  const newCart = cartParse.filter(item => item.id != id && item.selectedColor != color);
+  localStorage.setItem('cart', JSON.stringify(newCart));
+  target.remove();
+})
+});
 
 
-//})
-//not sure how this can work as it's not a button in the html?
+
 
 //Total quantity & price:
 const quantContainer = document.getElementById('totalQuantity');
