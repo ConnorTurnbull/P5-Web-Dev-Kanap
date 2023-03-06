@@ -39,26 +39,41 @@ itemContainer.innerHTML += itemHTML;
 });
 
 //Modify quantity:
-const quantInput = document.getElementsByClassName('itemQuantity');
+const quantInputs = Array.from(document.getElementsByClassName('itemQuantity'));
 
-// quantInput.itemQuantity.addEventListener('change', function () {
-//   const newQuant = quantInput.itemQuantity.value
-//   console.log(newQuant);
-//   console.log(cartParse[0].selectedQuantity);
-// })
+quantInputs.forEach(quantInput => {
+  quantInput.addEventListener('change', (e) => {
+  console.log(quantInput.value)
+  const newQuant = parseInt(quantInput.value);
+
+  const target = e.target.closest('.cart__item');
+  const {id, color} = target.dataset;
+  console.log(target.dataset);
+  
+  const existingItem = cartParse.find(
+    item => item.id = id && item.selectedColor == color
+  );
+  
+  if (existingItem) {
+    selectedQuantity = existingItem.selectedQuantity = 0 + newQuant;
+    console.log(existingItem);
+    localStorage.setItem('cart', JSON.stringify(cartParse.selectedQuantity));
+    console.log(cartParse);
+  }
+});
+});
 
 //Delete Item:
-
 const deleteButtons = Array.from(document.getElementsByClassName('deleteItem'));
+
 deleteButtons.forEach(deleteButton => {
-  console.log(deleteButton);
   deleteButton.addEventListener('click', (e) => {
   const target = e.target.closest('.cart__item');
   const {id, color} = target.dataset;
   const newCart = cartParse.filter(item => item.id != id && item.selectedColor != color);
   localStorage.setItem('cart', JSON.stringify(newCart));
   target.remove();
-})
+});
 });
 
 

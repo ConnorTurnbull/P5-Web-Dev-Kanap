@@ -77,14 +77,5 @@ fetch('http://localhost:3000/api/products/' + ID)
       console.log(localStorage);
       console.log(cart);
       window.alert('Item added to cart!');
-    })
-  })
-
-
-
-/*
-
-TO DO:
-- Prevent decimal input
-- look at maps/filters for arrays
-*/
+    });
+  });
