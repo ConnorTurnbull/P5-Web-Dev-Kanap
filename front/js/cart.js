@@ -57,8 +57,8 @@ quantInputs.forEach(quantInput => {
     localStorage.setItem('cart', JSON.stringify(cartParse));
     console.log(cartParse);
 
-    target.document.getElementById('totalQuantity')[0].innerHTML = newQuant;
-    target.document.getElementById('totalPrice')[0].innerHTML = newQuant * existingItem.price;
+    document.getElementById('totalQuantity').innerHTML = newQuant;
+    document.getElementById('totalPrice').innerHTML = newQuant * existingItem.price;
     
   }
 });
@@ -110,22 +110,40 @@ const emailError = document.getElementById('emailErrorMsg');
 
 const order = document.getElementById('order');
 
-function submitForm(order) {
-  order.preventDefault();
+order.addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
 
-}
+  const formData = {
+    contact: {
+      firstName:firstName.value,
+      lastName:lastName.value,
+      address:address.value,
+      city:city.value,
+      email:email.value,
+    },
 
-order.addEventListener('submit', (e) => {
-  const regex = /[a-z]/gi;
-  const currentValue = e.target.value;
-  console.log(regex.test(currentValue));
-
+    products: cartParse.map ( (p) => p.ID),
+  };
+  fetch('http://localhost:3000/api/products/order', {
+    method:"POST",
+    body:JSON.stringify(formData),
+    headers:{
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    }
+  })
+  .then(
+    res => res.json()
+  )
+  .then(
+    data => {window.location.href = "confirmation.html?id=" + data.orderId}
+  )
+  .catch(
+    error => console.error(error)
+  )
 })
-/* TO DO:
-- event listeners for delete + quant update
-- form
 
-*/
 
 
 
