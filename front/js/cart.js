@@ -34,11 +34,9 @@ const itemHTML =
 
 //Populate container with data:
 itemContainer.innerHTML += itemHTML;
-
-
 });
 
-//Modify quantity:
+// //Modify quantity:
 const quantInputs = Array.from(document.getElementsByClassName('itemQuantity'));
 
 quantInputs.forEach(quantInput => {
@@ -48,17 +46,20 @@ quantInputs.forEach(quantInput => {
 
   const target = e.target.closest('.cart__item');
   const {id, color} = target.dataset;
-  console.log(target.dataset);
   
   const existingItem = cartParse.find(
     item => item.id = id && item.selectedColor == color
   );
   
   if (existingItem) {
-    selectedQuantity = existingItem.selectedQuantity = 0 + newQuant;
+    existingItem.selectedQuantity = newQuant;
     console.log(existingItem);
-    localStorage.setItem('cart', JSON.stringify(cartParse.selectedQuantity));
+    localStorage.setItem('cart', JSON.stringify(cartParse));
     console.log(cartParse);
+
+    target.document.getElementById('totalQuantity')[0].innerHTML = newQuant;
+    target.document.getElementById('totalPrice')[0].innerHTML = newQuant * existingItem.price;
+    
   }
 });
 });
@@ -76,13 +77,9 @@ deleteButtons.forEach(deleteButton => {
 });
 });
 
-
-
-
 //Total quantity & price:
 const quantContainer = document.getElementById('totalQuantity');
 const priceContainer = document.getElementById('totalPrice');
-
 const quantHTML = `<span id="totalQuantity"><!-- 2 --></span>`;
 const priceHTML = `<span id="totalPrice"><!-- 84.00 --></span>`;
 
@@ -98,11 +95,32 @@ cartParse.forEach(cartParse => {
 quantContainer.innerHTML = quantTotal;
 priceContainer.innerHTML = priceTotal;
 
+//Form Validation:
+const firstName = document.getElementById('firstName');
+const lastName = document.getElementById('lastName');
+const address = document.getElementById('address');
+const city = document.getElementById('city');
+const email = document.getElementById('email');
 
+const firstNameError = document.getElementById('firstNameErrorMsg');
+const lastNameError = document.getElementById('lastNameErrorMsg');
+const addressError = document.getElementById('addressErrorMsg');
+const cityError = document.getElementById('cityErrorMsg');
+const emailError = document.getElementById('emailErrorMsg');
 
+const order = document.getElementById('order');
 
+function submitForm(order) {
+  order.preventDefault();
 
+}
 
+order.addEventListener('submit', (e) => {
+  const regex = /[a-z]/gi;
+  const currentValue = e.target.value;
+  console.log(regex.test(currentValue));
+
+})
 /* TO DO:
 - event listeners for delete + quant update
 - form
