@@ -1,3 +1,23 @@
+//Functions:
+
+function updateTotals() {
+  const quantContainer = document.getElementById('totalQuantity');
+  const priceContainer = document.getElementById('totalPrice');
+  
+  let quantTotal = 0;
+  let priceTotal = 0;
+  
+  cartParse.forEach(cartParse => {
+    quantTotal = quantTotal + cartParse.selectedQuantity;
+    itemTotal = cartParse.price * cartParse.selectedQuantity;
+    priceTotal = priceTotal + itemTotal;
+  });
+  
+  quantContainer.innerHTML = quantTotal;
+  priceContainer.innerHTML = priceTotal;
+
+}
+
 //Retrieve item from local storage:
 const cart = localStorage.getItem('cart');
 const cartParse = JSON.parse(cart);
@@ -36,7 +56,7 @@ const itemHTML =
 itemContainer.innerHTML += itemHTML;
 });
 
-// //Modify quantity:
+//Modify quantity:
 const quantInputs = Array.from(document.getElementsByClassName('itemQuantity'));
 
 quantInputs.forEach(quantInput => {
@@ -53,13 +73,11 @@ quantInputs.forEach(quantInput => {
   
   if (existingItem) {
     existingItem.selectedQuantity = newQuant;
-    console.log(existingItem);
+    // console.log(existingItem);
     localStorage.setItem('cart', JSON.stringify(cartParse));
-    console.log(cartParse);
+    // console.log(cartParse);
+    updateTotals();
 
-    document.getElementById('totalQuantity').innerHTML = newQuant;
-    document.getElementById('totalPrice').innerHTML = newQuant * existingItem.price;
-    
   }
 });
 });
@@ -78,22 +96,7 @@ deleteButtons.forEach(deleteButton => {
 });
 
 //Total quantity & price:
-const quantContainer = document.getElementById('totalQuantity');
-const priceContainer = document.getElementById('totalPrice');
-const quantHTML = `<span id="totalQuantity"><!-- 2 --></span>`;
-const priceHTML = `<span id="totalPrice"><!-- 84.00 --></span>`;
-
-let quantTotal = 0;
-let priceTotal = 0;
-
-cartParse.forEach(cartParse => {
-  quantTotal = quantTotal + cartParse.selectedQuantity;
-  itemTotal = cartParse.price * cartParse.selectedQuantity;
-  priceTotal = priceTotal + itemTotal;
-});
-
-quantContainer.innerHTML = quantTotal;
-priceContainer.innerHTML = priceTotal;
+updateTotals();
 
 //Form Validation:
 const firstName = document.getElementById('firstName');
@@ -101,12 +104,6 @@ const lastName = document.getElementById('lastName');
 const address = document.getElementById('address');
 const city = document.getElementById('city');
 const email = document.getElementById('email');
-
-const firstNameError = document.getElementById('firstNameErrorMsg');
-const lastNameError = document.getElementById('lastNameErrorMsg');
-const addressError = document.getElementById('addressErrorMsg');
-const cityError = document.getElementById('cityErrorMsg');
-const emailError = document.getElementById('emailErrorMsg');
 
 const order = document.getElementById('order');
 
