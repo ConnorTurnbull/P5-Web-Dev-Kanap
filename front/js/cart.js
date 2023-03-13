@@ -98,7 +98,7 @@ deleteButtons.forEach(deleteButton => {
 //Total quantity & price:
 updateTotals();
 
-//Form Validation:
+//Order form validation / submission:
 const firstName = document.getElementById('firstName');
 const lastName = document.getElementById('lastName');
 const address = document.getElementById('address');
@@ -111,6 +111,7 @@ order.addEventListener('click', (e) => {
   e.preventDefault();
   e.stopPropagation();
 
+  
   const formData = {
     contact: {
       firstName:firstName.value,
@@ -122,6 +123,7 @@ order.addEventListener('click', (e) => {
 
     products: cartParse.map ( (p) => p.ID),
   };
+  
   fetch('http://localhost:3000/api/products/order', {
     method:"POST",
     body:JSON.stringify(formData),
@@ -130,6 +132,7 @@ order.addEventListener('click', (e) => {
       "Content-Type": "application/json",
     }
   })
+
   .then(
     res => res.json()
   )
@@ -140,7 +143,6 @@ order.addEventListener('click', (e) => {
     error => console.error(error)
   )
 })
-
 
 
 
