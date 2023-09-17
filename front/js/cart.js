@@ -6,7 +6,7 @@ function updateTotals() {
   
   let quantTotal = 0;
   let priceTotal = 0;
-  
+
   cartParse.forEach(cartParse => {
     quantTotal = quantTotal + cartParse.selectedQuantity;
     itemTotal = cartParse.price * cartParse.selectedQuantity;
@@ -92,8 +92,29 @@ deleteButtons.forEach(deleteButton => {
   const newCart = cartParse.filter(item => item.id != id && item.selectedColor != color);
   localStorage.setItem('cart', JSON.stringify(newCart));
   target.remove();
-});
-});
+  quantTotal = 0;
+  priceTotal = 0;
+  console.log(newCart);
+
+  // Close but maths doesn't work out properly.
+  function newCartUpdate() { 
+    const quantContainer = document.getElementById('totalQuantity');
+    const priceContainer = document.getElementById('totalPrice');
+  
+    newCart.forEach(newCart => {
+    
+      quantTotal = quantTotal + newCart.selectedQuantity;
+      itemTotal = newCart.price * newCart.selectedQuantity;
+      priceTotal = priceTotal + itemTotal;  })
+  
+      quantContainer.innerHTML = quantTotal;
+      priceContainer.innerHTML = priceTotal;
+  };
+
+  newCartUpdate();
+})});
+
+
 
 //Total quantity & price:
 updateTotals();
