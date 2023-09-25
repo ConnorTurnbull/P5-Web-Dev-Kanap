@@ -3,7 +3,7 @@
 function updateTotals() {
   const quantContainer = document.getElementById('totalQuantity');
   const priceContainer = document.getElementById('totalPrice');
-  
+
   let quantTotal = 0;
   let priceTotal = 0;
 
@@ -12,7 +12,7 @@ function updateTotals() {
     itemTotal = cartParse.price * cartParse.selectedQuantity;
     priceTotal = priceTotal + itemTotal;
   });
-  
+
   quantContainer.innerHTML = quantTotal;
   priceContainer.innerHTML = priceTotal;
 
@@ -29,8 +29,8 @@ const itemContainer = document.getElementById('cart__items');
 //Insert Data:
 cartParse.forEach(cartParse => {
 
-const itemHTML =
-`<article class="cart__item" data-id="${cartParse.ID}" data-color="${cartParse.selectedColor}">
+  const itemHTML =
+    `<article class="cart__item" data-id="${cartParse.ID}" data-color="${cartParse.selectedColor}">
 <div class="cart__item__img">
 <img src="${cartParse.imageUrl}" alt="${cartParse.altTxt}">
 </div>
@@ -52,8 +52,8 @@ const itemHTML =
 </div>
 </article>`;
 
-//Populate container with data:
-itemContainer.innerHTML += itemHTML;
+  //Populate container with data:
+  itemContainer.innerHTML += itemHTML;
 });
 
 //Modify quantity:
@@ -61,58 +61,54 @@ const quantInputs = Array.from(document.getElementsByClassName('itemQuantity'));
 
 quantInputs.forEach(quantInput => {
   quantInput.addEventListener('change', (e) => {
-  console.log(quantInput.value)
-  const newQuant = parseInt(quantInput.value);
+    const newQuant = parseInt(quantInput.value);
 
-  const target = e.target.closest('.cart__item');
-  const {id, color} = target.dataset;
-  
-  const existingItem = cartParse.find(
-    item => item.id = id && item.selectedColor == color
-  );
-  
-  if (existingItem) {
-    existingItem.selectedQuantity = newQuant;
-    // console.log(existingItem);
-    localStorage.setItem('cart', JSON.stringify(cartParse));
-    // console.log(cartParse);
-    updateTotals();
+    const target = e.target.closest('.cart__item');
+    const { id, color } = target.dataset;
 
-  }
-});
+    const existingItem = cartParse.find(
+      item => item.id = id && item.selectedColor == color
+    );
+
+    if (existingItem) {
+      existingItem.selectedQuantity = newQuant;
+      localStorage.setItem('cart', JSON.stringify(cartParse));
+      updateTotals();
+
+    }
+  });
 });
 
 //Delete Item:
 const deleteButtons = Array.from(document.getElementsByClassName('deleteItem'));
 
 deleteButtons.forEach(deleteButton => {
+  
   deleteButton.addEventListener('click', (e) => {
-  const target = e.target.closest('.cart__item');
-  const {id, color} = target.dataset;
-  const newCart = cartParse.filter(item => item.id != id && item.selectedColor != color);
-  localStorage.setItem('cart', JSON.stringify(newCart));
-  target.remove();
-  quantTotal = 0;
-  priceTotal = 0;
-  console.log(newCart);
-
-  // Close but maths doesn't work out properly.
-  function newCartUpdate() { 
+    const target = e.target.closest('.cart__item');
+    const { id, color } = target.dataset;
+    const newCart = cartParse.filter(item => item.id != id && item.selectedColor != color);
+    localStorage.setItem('cart', JSON.stringify(newCart));
+    target.remove();
+    
     const quantContainer = document.getElementById('totalQuantity');
     const priceContainer = document.getElementById('totalPrice');
   
-    newCart.forEach(newCart => {
-    
-      quantTotal = quantTotal + newCart.selectedQuantity;
-      itemTotal = newCart.price * newCart.selectedQuantity;
-      priceTotal = priceTotal + itemTotal;  })
+    let quantTotal = 0;
+    let priceTotal = 0;
   
-      quantContainer.innerHTML = quantTotal;
-      priceContainer.innerHTML = priceTotal;
-  };
-
-  newCartUpdate();
-})});
+    newCart.forEach(cartParse => {
+      quantTotal = quantTotal + cartParse.selectedQuantity;
+      itemTotal = cartParse.price * cartParse.selectedQuantity;
+      priceTotal = priceTotal + itemTotal;
+    });
+  
+    quantContainer.innerHTML = quantTotal;
+    priceContainer.innerHTML = priceTotal;
+    
+  });
+  
+});
 
 
 
@@ -132,37 +128,37 @@ order.addEventListener('click', (e) => {
   e.preventDefault();
   e.stopPropagation();
 
-  
+
   const formData = {
     contact: {
-      firstName:firstName.value,
-      lastName:lastName.value,
-      address:address.value,
-      city:city.value,
-      email:email.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
+      address: address.value,
+      city: city.value,
+      email: email.value,
     },
 
-    products: cartParse.map ( (p) => p.ID),
+    products: cartParse.map((p) => p.ID),
   };
-  
+
   fetch('http://localhost:3000/api/products/order', {
-    method:"POST",
-    body:JSON.stringify(formData),
-    headers:{
+    method: "POST",
+    body: JSON.stringify(formData),
+    headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     }
   })
 
-  .then(
-    res => res.json()
-  )
-  .then(
-    data => {window.location.href = "confirmation.html?id=" + data.orderId}
-  )
-  .catch(
-    error => console.error(error)
-  )
+    .then(
+      res => res.json()
+    )
+    .then(
+      data => { window.location.href = "confirmation.html?id=" + data.orderId }
+    )
+    .catch(
+      error => console.error(error)
+    )
 })
 
 
@@ -171,4 +167,4 @@ order.addEventListener('click', (e) => {
 
 
 
-    
+
