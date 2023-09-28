@@ -83,31 +83,36 @@ quantInputs.forEach(quantInput => {
 const deleteButtons = Array.from(document.getElementsByClassName('deleteItem'));
 
 deleteButtons.forEach(deleteButton => {
-  
+
   deleteButton.addEventListener('click', (e) => {
     const target = e.target.closest('.cart__item');
     const { id, color } = target.dataset;
-    const newCart = cartParse.filter(item => item.id != id && item.selectedColor != color);
+
+    const oldCart = JSON.parse(localStorage.getItem('cart'));
+    const newCart = oldCart.filter(item => item.id != id && item.selectedColor != color);
+    
     localStorage.setItem('cart', JSON.stringify(newCart));
     target.remove();
-    
+
     const quantContainer = document.getElementById('totalQuantity');
     const priceContainer = document.getElementById('totalPrice');
-  
+
     let quantTotal = 0;
     let priceTotal = 0;
-  
+
     newCart.forEach(cartParse => {
       quantTotal = quantTotal + cartParse.selectedQuantity;
       itemTotal = cartParse.price * cartParse.selectedQuantity;
       priceTotal = priceTotal + itemTotal;
     });
-  
+
     quantContainer.innerHTML = quantTotal;
     priceContainer.innerHTML = priceTotal;
-    
+
+
+
   });
-  
+
 });
 
 
