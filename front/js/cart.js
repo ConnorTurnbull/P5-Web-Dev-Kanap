@@ -129,10 +129,26 @@ const email = document.getElementById('email');
 
 const order = document.getElementById('order');
 
-order.addEventListener('click', (e) => {
-  e.preventDefault();
-  e.stopPropagation();
+const firstNameError = document.getElementById('firstNameErrorMsg')
+const lastNameError = document.getElementById('lastNameErrorMsg')
+const addressError = document.getElementById('addressErrorMsg')
+const cityError = document.getElementById('cityErrorMsg')
+const emailError = document.getElementById('emailErrorMsg')
 
+order.addEventListener('submit', (e) => {
+  // e.preventDefault();
+  // e.stopPropagation();
+
+  let errorMessages = []
+
+  if (firstName.value === '' || firstName.value == null) {
+    errorMessages.push('Name is required')
+  }
+
+  if(errorMessages.length > 0) {
+    firstNameError.innerHTML = errorMessages.join(', ')
+
+  }
 
   const formData = {
     contact: {
