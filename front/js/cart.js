@@ -120,7 +120,7 @@ deleteButtons.forEach(deleteButton => {
 //Total quantity & price:
 updateTotals();
 
-//Order form validation / submission:
+//Order form validation / submission:  
 const firstName = document.getElementById('firstName');
 const lastName = document.getElementById('lastName');
 const address = document.getElementById('address');
@@ -135,22 +135,59 @@ const addressError = document.getElementById('addressErrorMsg')
 const cityError = document.getElementById('cityErrorMsg')
 const emailError = document.getElementById('emailErrorMsg')
 
+function validateInput() {
+  var numbersReg = /\d/g
+  var emailReg = /[@.]/g
+
+  //First name validation
+  if (firstName.value.trim() === "" || firstName.value.trim() == null) {
+    firstNameError.innerText = "First name cannot be blank";
+  } else if (firstName.value.match(numbersReg)) {
+    firstNameError.innerText = "First name must only contain letters";
+  } else {
+  }
+
+  //Last name validation
+  if (lastName.value.trim() === "" || lastName.value.trim() == null) {
+    lastNameError.innerText = "Last name cannot be blank";
+  } else if (lastName.value.match(numbersReg)) {
+    lastNameError.innerText = "Last name must only contain letters";
+  } else{
+  }
+
+  //Address validation
+  if (address.value.trim() === "" || address.value.trim() == null) {
+    addressError.innerText = "Address cannot be blank";
+  } else{
+  }
+
+  //City validation
+  if (city.value.trim() === "" || city.value.trim() == null) {
+    cityError.innerText = "City cannot be blank";
+  } else if (city.value.match(numbersReg)) {
+    cityError.innerText = "City must only contain letters";
+  } else{
+  }
+
+  //Email validation
+  if (email.value.trim() === "" || email.value.trim() == null) {
+    emailError.innerText = "Email address cannot be blank";
+  } else if (email.value.match(emailReg)) {
+    emailError.innerText = "Not a valid email address";
+  } else{
+  }
+
+}
+
+
 order.addEventListener('submit', (e) => {
-  // e.preventDefault();
-  // e.stopPropagation();
-
-  let errorMessages = []
-
-  if (firstName.value === '' || firstName.value == null) {
-    errorMessages.push('Name is required')
-  }
-
-  if(errorMessages.length > 0) {
-    firstNameError.innerHTML = errorMessages.join(', ')
-
-  }
-
-  const formData = {
+  
+  e.preventDefault();
+  e.stopPropagation();
+  
+  validateInput();
+ 
+  const formData = { 
     contact: {
       firstName: firstName.value,
       lastName: lastName.value,
@@ -179,6 +216,7 @@ order.addEventListener('submit', (e) => {
     )
     .catch(
       error => console.error(error)
+      
     )
 })
 
