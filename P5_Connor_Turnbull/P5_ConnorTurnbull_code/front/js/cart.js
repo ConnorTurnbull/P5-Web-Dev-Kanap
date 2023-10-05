@@ -120,7 +120,7 @@ deleteButtons.forEach(deleteButton => {
 //Total quantity & price:
 updateTotals();
 
-//Order form validation / submission:
+//Order form validation / submission:  
 const firstName = document.getElementById('firstName');
 const lastName = document.getElementById('lastName');
 const address = document.getElementById('address');
@@ -129,41 +129,114 @@ const email = document.getElementById('email');
 
 const order = document.getElementById('order');
 
+const firstNameError = document.getElementById('firstNameErrorMsg')
+const lastNameError = document.getElementById('lastNameErrorMsg')
+const addressError = document.getElementById('addressErrorMsg')
+const cityError = document.getElementById('cityErrorMsg')
+const emailError = document.getElementById('emailErrorMsg')
+
+function validateInput() {
+  var numbersReg = /\d/g
+  var emailReg = /@/g
+
+  //First name validation
+  if (firstName.value.trim() === "" || firstName.value.trim() == null) {
+    firstNameError.innerText = "First name cannot be blank";
+    return false
+  } else if (firstName.value.match(numbersReg)) {
+    firstNameError.innerText = "First name must only contain letters";
+    return false
+  } else {
+  }
+
+  //Last name validation
+  if (lastName.value.trim() === "" || lastName.value.trim() == null) {
+    lastNameError.innerText = "Last name cannot be blank";
+    return false
+  } else if (lastName.value.match(numbersReg)) {
+    lastNameError.innerText = "Last name must only contain letters";
+    return false
+  } else{
+  }
+
+  //Address validation
+  if (address.value.trim() === "" || address.value.trim() == null) {
+    addressError.innerText = "Address cannot be blank";
+    return false
+  } else{
+  }
+
+  //City validation
+  if (city.value.trim() === "" || city.value.trim() == null) {
+    cityError.innerText = "City cannot be blank";
+    return false
+  } else if (city.value.match(numbersReg)) {
+    cityError.innerText = "City must only contain letters";
+    return false
+  } else{
+  }
+
+  //Email validation
+  if (email.value.trim() === "" || email.value.trim() == null) {
+    emailError.innerText = "Email address cannot be blank";
+    return false
+  } else if (!email.value.match(emailReg)) {
+    emailError.innerText = "Not a valid email address";
+    return false
+  } else{
+  }
+
+  return true
+}
+
+
+
+
 order.addEventListener('click', (e) => {
+  
   e.preventDefault();
   e.stopPropagation();
+  
+  
+  
+  const isValid = validateInput();
+  console.log(validateInput())
+  if (!isValid) {
+    throw new Error ("Invalid form data")
+  }
 
+  
+  const formData = { 
+      contact: {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        address: address.value,
+        city: city.value,
+        email: email.value,
+      },
 
-  const formData = {
-    contact: {
-      firstName: firstName.value,
-      lastName: lastName.value,
-      address: address.value,
-      city: city.value,
-      email: email.value,
-    },
+      products: cartParse.map((p) => p.ID),
+    };
 
-    products: cartParse.map((p) => p.ID),
-  };
+    fetch('http://localhost:3000/api/products/order', {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    })
 
-  fetch('http://localhost:3000/api/products/order', {
-    method: "POST",
-    body: JSON.stringify(formData),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    }
-  })
-
-    .then(
-      res => res.json()
-    )
-    .then(
-      data => { window.location.href = "confirmation.html?id=" + data.orderId }
-    )
-    .catch(
-      error => console.error(error)
-    )
+      .then(
+        res => res.json()
+      )
+      .then(
+        data => { window.location.href = "confirmation.html?id=" + data.orderId }
+      )
+      .catch(
+        error => console.error(error)
+        
+      )
 })
 
 

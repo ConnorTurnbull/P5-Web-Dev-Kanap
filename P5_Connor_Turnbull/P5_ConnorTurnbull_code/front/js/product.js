@@ -24,7 +24,6 @@ fetch('http://localhost:3000/api/products/' + ID)
     const priceHTML = `<span id="price">${price}</span>`;
     const descHTML = `<p id="description">${desc}</p>`;
 
-
     //For loop for color select dropdown:
     colors.forEach(function (color) {
       const newOption = document.createElement("option");
