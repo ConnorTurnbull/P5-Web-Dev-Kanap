@@ -1,3 +1,5 @@
+let cart = []
+
 //Functions:
 
 function updateTotals() {
@@ -7,9 +9,9 @@ function updateTotals() {
   let quantTotal = 0;
   let priceTotal = 0;
 
-  cartParse.forEach(cartParse => {
+  cart.forEach((cartParse, i) => {
     quantTotal = quantTotal + cartParse.selectedQuantity;
-    itemTotal = cartParse.price * cartParse.selectedQuantity;
+    itemTotal = cart[i].price * cartParse.selectedQuantity;
     priceTotal = priceTotal + itemTotal;
   });
 
@@ -19,15 +21,14 @@ function updateTotals() {
 }
 
 //Retrieve item from local storage:
-const cart = localStorage.getItem('cart');
-const cartParse = JSON.parse(cart);
-console.log(cartParse);
+cart = JSON.parse(localStorage.getItem('cart'));
+
 
 //Specify container:
 const itemContainer = document.getElementById('cart__items');
 
 //Insert Data:
-cartParse.forEach(cartParse => {
+function renderCart() {cart.forEach(cartParse => {
 
   const itemHTML =
     `<article class="cart__item" data-id="${cartParse.ID}" data-color="${cartParse.selectedColor}">
@@ -38,7 +39,7 @@ cartParse.forEach(cartParse => {
 <div class="cart__item__content__description">
   <h2>${cartParse.name}</h2>
   <p>${cartParse.selectedColor}</p>
-  <p>€${cartParse.price}</p>
+  <p class="cart__item__price">€${cartParse.price}</p>
 </div>
 <div class="cart__item__content__settings">
   <div class="cart__item__content__settings__quantity">
@@ -54,7 +55,9 @@ cartParse.forEach(cartParse => {
 
   //Populate container with data:
   itemContainer.innerHTML += itemHTML;
-});
+});}
+
+renderCart()
 
 //Modify quantity:
 const quantInputs = Array.from(document.getElementsByClassName('itemQuantity'));
@@ -66,13 +69,13 @@ quantInputs.forEach(quantInput => {
     const target = e.target.closest('.cart__item');
     const { id, color } = target.dataset;
 
-    const existingItem = cartParse.find(
+    const existingItem = cart.find(
       item => item.id = id && item.selectedColor == color
     );
 
     if (existingItem) {
       existingItem.selectedQuantity = newQuant;
-      localStorage.setItem('cart', JSON.stringify(cartParse));
+      localStorage.setItem('cart', JSON.stringify(cart));
       updateTotals();
 
     }
@@ -88,9 +91,10 @@ deleteButtons.forEach(deleteButton => {
     const target = e.target.closest('.cart__item');
     const { id, color } = target.dataset;
 
-    const oldCart = JSON.parse(localStorage.getItem('cart'));
-    const newCart = oldCart.filter(item => item.id != id && item.selectedColor != color);
-    
+    // const oldCart = JSON.parse(localStorage.getItem('cart'));
+    const newCart = cart.filter(item => item.id != id && item.selectedColor != color);
+    cart = newCart
+
     localStorage.setItem('cart', JSON.stringify(newCart));
     target.remove();
 
@@ -137,7 +141,7 @@ const emailError = document.getElementById('emailErrorMsg')
 
 function validateInput() {
   var numbersReg = /\d/g
-  var emailReg = /@/g
+  var emailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
 
   //First name validation
   if (firstName.value.trim() === "" || firstName.value.trim() == null) {
@@ -147,6 +151,7 @@ function validateInput() {
     firstNameError.innerText = "First name must only contain letters";
     return false
   } else {
+    firstNameError.innerText = "";
   }
 
   //Last name validation
@@ -156,14 +161,16 @@ function validateInput() {
   } else if (lastName.value.match(numbersReg)) {
     lastNameError.innerText = "Last name must only contain letters";
     return false
-  } else{
+  } else {
+    lastNameError.innerText = "";
   }
 
   //Address validation
   if (address.value.trim() === "" || address.value.trim() == null) {
     addressError.innerText = "Address cannot be blank";
     return false
-  } else{
+  } else {
+    addressError.innerText = "";
   }
 
   //City validation
@@ -173,7 +180,8 @@ function validateInput() {
   } else if (city.value.match(numbersReg)) {
     cityError.innerText = "City must only contain letters";
     return false
-  } else{
+  } else {
+    cityError.innerText = "";
   }
 
   //Email validation
@@ -183,7 +191,8 @@ function validateInput() {
   } else if (!email.value.match(emailReg)) {
     emailError.innerText = "Not a valid email address";
     return false
-  } else{
+  } else {
+    emailError.innerText = "";
   }
 
   return true
@@ -193,56 +202,78 @@ function validateInput() {
 
 
 order.addEventListener('click', (e) => {
-  
+
   e.preventDefault();
   e.stopPropagation();
-  
-  
-  
+
+
+
   const isValid = validateInput();
   console.log(validateInput())
   if (!isValid) {
-    throw new Error ("Invalid form data")
+    throw new Error("Invalid form data")
   }
 
-  
-  const formData = { 
-      contact: {
-        firstName: firstName.value,
-        lastName: lastName.value,
-        address: address.value,
-        city: city.value,
-        email: email.value,
-      },
 
-      products: cartParse.map((p) => p.ID),
-    };
+  const formData = {
+    contact: {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      address: address.value,
+      city: city.value,
+      email: email.value,
+    },
 
-    fetch('http://localhost:3000/api/products/order', {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }
-    })
+    products: cart.map((p) => p.ID),
+  };
 
-      .then(
-        res => res.json()
-      )
-      .then(
-        data => { window.location.href = "confirmation.html?id=" + data.orderId }
-      )
-      .catch(
-        error => console.error(error)
-        
-      )
+  fetch('http://localhost:3000/api/products/order', {
+    method: "POST",
+    body: JSON.stringify(formData),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    }
+  })
+
+    .then(
+      res => res.json()
+    )
+    .then(
+
+      data => { 
+        cart = []
+        localStorage.setItem("cart", JSON.stringify(cart))
+        window.location.href = "confirmation.html?id=" + data.orderId }
+    )
+    .catch(
+      error => console.error(error)
+
+    )
 })
 
 
 
 
+Promise.all(cart.map(item =>
+  fetch('http://localhost:3000/api/products/' + item.ID).then(
+    res => res.json()
+  )
+)).then(
+  (items) => {
+    cart = cart.map((c, i) => ({
+      ...c, price: items[i].price
+    }))
+    updateTotals()
+    const prices = Array.from(document.querySelectorAll(".cart__item__price"))
+    cart.forEach((cartParse, i) => {
+      prices[i].innerHTML = "€" + cartParse.price
+    })
+  }
+).catch(
+    error => console.error(error)
 
+  )
 
 
 

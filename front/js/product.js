@@ -45,7 +45,7 @@ fetch('http://localhost:3000/api/products/' + ID)
     cartButton.addEventListener('click', function () {
       const { value: selectedColor } = colorContainer;
       const { value: selectedQuantity } = quantity;
-      const item = { ID, selectedColor, imageUrl, altTxt, name, price, selectedQuantity: parseInt(selectedQuantity) };
+      const item = { ID, selectedColor, imageUrl, altTxt, name, selectedQuantity: parseInt(selectedQuantity) };
 
       //Input validation:
       if (selectedColor == '') {
