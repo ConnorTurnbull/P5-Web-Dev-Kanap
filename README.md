@@ -26,10 +26,10 @@ Subject: The Kanap e-commerce website
 >
 >Here are the various tasks you will have to carry out:
 >
->- Bring together the work done by the team by integrating the API information into the various web pages using Javascript. The front-end and the API code can be found here on Github.
->- Implement a plan for acceptance tests based on the template that we usually use.</br>
+>- Bring together the work done by the team by integrating the API information into the various web pages using Javascript. The front-end and the API code can be found here on [Github](https://github.com/OpenClassrooms-Student-Center/P5-Web-Dev-Kanap).
+>- Implement a plan for acceptance tests based on the [template](https://github.com/ConnorTurnbull/Project-5-Build-an-E-Commerce-Website-with-Javascript/blob/master/WD%2BP5%2B-%2BTemplate%2Bfor%2Bacceptance%2Btest%2Bplan.xlsx) that we usually use.</br>
 >
->If you require more information on this you can take a look at the technical and functional specifications for this project. This document contains all the information about the project and highlights the expectations for each of the web pages and outlines the details of the API.
+>If you require more information on this you can take a look at the [technical and functional specifications](https://github.com/ConnorTurnbull/Project-5-Build-an-E-Commerce-Website-with-Javascript/blob/master/WD%2BP5%2B-%2BFunctional%2Bspecifications.pdf) for this project. This document contains all the information about the project and highlights the expectations for each of the web pages and outlines the details of the API.
 >
 >Feel free to come to see me if you have any questions, my door is always open.
 >
