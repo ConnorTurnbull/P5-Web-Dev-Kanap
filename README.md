@@ -2,11 +2,13 @@
 <h2>Overview</h2>
 The purpose of this project was to use vanilla Javascript to implement dynamic content from a pre-existing API to a pre-existing frontend and provide a spreadsheet test plan for site functionality.
 <h2>Instructions</h2>
+<h4>Frontend</h4>
+- host index.html using live server or similar.
+<h4>Backend</h4>
+- navigate to 'Projecy-5/back then "nodemon server" in terminal.
 <h2>Tech Stack</h2>
 Javascript (vanilla)
 <h2>Scenario</h2>
-</br>
-</br>
 You recently started working at a web development agency. During the first few weeks, you successfully developed a few websites using HTML/CSS and now you have been assigned a new task.
 
 Your client is Kanap, a furniture company which sells its products from their physical shop only. The company would now like to add an online store to its physical shop in order to sell its products on the Internet.
