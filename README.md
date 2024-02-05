@@ -1,5 +1,10 @@
 <h1>Project 5 - Build an e-commerce website with Javascript</h1>
-<b>Scenario</b>
+<h2>Overview</h2>
+The purpose of this project was to use vanilla Javascript to implement dynamic content from a pre-existing API to a pre-existing frontend and provide a spreadsheet test plan for site functionality.
+<h2>Instructions</h2>
+<h2>Tech Stack</h2>
+Javascript (vanilla)
+<h2>Scenario</h2>
 </br>
 </br>
 You recently started working at a web development agency. During the first few weeks, you successfully developed a few websites using HTML/CSS and now you have been assigned a new task.
